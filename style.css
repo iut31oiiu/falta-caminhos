@@ -1,0 +1,127 @@
+/*
+    style_login.css
+    Estilos para a tela de Login e Cadastro (para consistência)
+*/
+
+/* Reset e Configurações Básicas */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f9; /* Fundo cinza claro */
+    color: #333;
+}
+
+/* Container Principal do Formulário */
+.login-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Largura máxima para a tela de login */
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 25px;
+    color: #0056b3; /* Cor azul para o título */
+    font-size: 1.8em;
+}
+
+/* Grupos de Formulário */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #007bff; /* Borda azul ao focar */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Botão de Login/Cadastro */
+.btn-login {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}
+
+/* Mensagem de Erro */
+.mensagem-erro {
+    background-color: #fdd; /* Vermelho claro */
+    color: #cc0000; /* Vermelho escuro */
+    border: 1px solid #fbc;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+/* Mensagem de Sucesso (após cadastro) */
+.mensagem-sucesso {
+    background-color: #dff0d8; 
+    color: #3c763d; 
+    border: 1px solid #d6e9c6; 
+    padding: 10px; 
+    border-radius: 4px; 
+    margin-bottom: 20px; 
+    font-size: 0.9em;
+}
+
+/* Link de Cadastro */
+.cadastro-link {
+    margin-top: 25px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.cadastro-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.cadastro-link a:hover {
+    text-decoration: underline;
+}
