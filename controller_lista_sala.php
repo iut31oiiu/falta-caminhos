@@ -1,28 +1,26 @@
 <?php
-session_start();
-
 if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     header('Location: ../views/view_login.php'); // Redireciona para o login
     exit;
 }
 require "db_connect.php"; 
 
-$filtros = [];
-$whereClauses = [];
-$params = [];
-$nomeSalaAtual = null;
+$nomeSalaAtual = $_GET['nome_sala'] ?? null;
 $avisoBaixa = $_GET['aviso_baixa'] ?? null;
-$errorMessage = null;
+$erroBaixa = $_GET['erro_baixa'] ?? null;
+$avisoMovimento = $_GET['aviso_movimento'] ?? null;
+$erroMovimento = $_GET['erro_movimento'] ?? null;
 
-if (empty($_GET['nome_sala'])) {
-    header("Location: index.php");
+if (empty($nomeSalaAtual)) {
+    header('Location: index.php');
     exit;
 }
 
-$nomeSalaAtual = trim($_GET['nome_sala']);
-$whereClauses[] = "nome_sala = :nome_sala_atual";
-$params[':nome_sala_atual'] = $nomeSalaAtual;
-$filtros['nome_sala'] = $nomeSalaAtual; 
+$filtros = ['nome_sala' => $nomeSalaAtual];
+$whereClauses = ["nome_sala = :nome_sala"];
+$params = [':nome_sala' => $nomeSalaAtual];
+$errorMessage = null; 
+$resultPatrimonios = [];
 
 if (!empty($_GET['codigo'])) {
     $codigo = trim($_GET['codigo']);
@@ -39,21 +37,6 @@ if (!empty($_GET['tipo'])) {
     $params[':tipo'] = "%" . $tipo . "%";
     $filtros['tipo'] = $tipo;
 }
-if (!empty($_GET['marca'])) {
-    $marca = trim($_GET['marca']);
-    $whereClauses[] = "marca LIKE :marca";
-    $params[':marca'] = "%" . $marca . "%";
-    $filtros['marca'] = $marca;
-}
-if (!empty($_GET['ano'])) {
-    $ano = trim($_GET['ano']);
-    if (is_numeric($ano)) {
-        $whereClauses[] = "ano = :ano";
-        $params[':ano'] = $ano;
-        $filtros['ano'] = $ano;
-    }
-}
-
 
 $selecionaPatrimonio = "SELECT * FROM patrimonio";
 
@@ -63,21 +46,21 @@ if (!empty($whereClauses)) {
 
 $selecionaPatrimonio .= " ORDER BY codigo ASC";
 
-$resultPatrimonio = [];
-
 try {
     $stmt = $pdo->prepare($selecionaPatrimonio);
     
-    
-    foreach ($params as $key => &$value) {
-        $stmt->bindParam($key, $value);
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
     }
     
     $stmt->execute();
-    $resultPatrimonio = $stmt->fetchAll();
+    $resultPatrimonios = $stmt->fetchAll();
+    
 } catch (PDOException $e) {
-    $errorMessage = "<h1 style='color: red;'>Erro ao listar patrimônio: </h1>" . $e->getMessage();
+    $errorMessage = "Erro ao buscar patrimônio: " . $e->getMessage();
 }
 
-include 'view_lista_sala.php';
+
+require '../views/view_lista_sala.php';
+
 ?>
